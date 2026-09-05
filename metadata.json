@@ -1,0 +1,6 @@
+{
+  "name": "CareerTwin",
+  "description": "Grounded AI career co-pilot featuring resume RAG analysis, job matching, mock interview simulations, and skill-gap roadmap.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

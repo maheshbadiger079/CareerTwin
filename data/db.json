@@ -1,0 +1,91 @@
+{
+  "users": {
+    "test_user_a_1788632617827": {
+      "id": "test_user_a_1788632617827",
+      "email": "test_a_1788632617835@example.com",
+      "name": "Alice Engineer",
+      "passwordHash": "100323172c29b6aa64633e1bbed4fea9f4a96e9d21ac2b20ad00ce68040abdee185457717778b36951e64cc4a6f318269fe507e1cd856dd120c32797b6f4f433",
+      "salt": "6992bec707ee5b9f4c211b12ad14c9ec",
+      "createdAt": "2026-09-05T18:23:37.835Z"
+    },
+    "test_user_b_1788632617827": {
+      "id": "test_user_b_1788632617827",
+      "email": "test_b_1788632617851@example.com",
+      "name": "Bob Candidate",
+      "passwordHash": "806124f21b4f50ba59cf9c027413cbf907d79c952accf13c6029d6541c855425e1e5865c4dd199d345fa0e6e531df0acfe8b87d0235323bb3fadeb6d14fcef50",
+      "salt": "f3e22c7462875da2b07a484fdfe1905a",
+      "createdAt": "2026-09-05T18:23:37.851Z"
+    },
+    "test_user_a_1788632882873": {
+      "id": "test_user_a_1788632882873",
+      "email": "test_a_1788632882880@example.com",
+      "name": "Alice Engineer",
+      "passwordHash": "a07fac6755b958b6e5cb699bda37da6d23aab1d2958f1a8a5c5586fa852f509fda00d08443a50938ccb1e53ce5ac40e19b3dc2652ac65265bbd959d660951533",
+      "salt": "ca88ca6e3ec5c65643940cb8360130f3",
+      "createdAt": "2026-09-05T18:28:02.880Z"
+    },
+    "test_user_b_1788632882873": {
+      "id": "test_user_b_1788632882873",
+      "email": "test_b_1788632882895@example.com",
+      "name": "Bob Candidate",
+      "passwordHash": "c188c8d413fc098eec99108fc0a493c4c7b2c8ab19c6fab5394c21069bb49e12dee1da9e99eb0f668931045ab871f9d51e0c18a90d3d9bac12009f8a8131bbd3",
+      "salt": "e9f636dea6fd0542a699c612dea8c6bf",
+      "createdAt": "2026-09-05T18:28:02.895Z"
+    }
+  },
+  "tokens": {
+    "3752dd9c765f329c207d6e5457b4c43323f1fafa8002f86dbc4f1f6c2d2f1106": {
+      "token": "3752dd9c765f329c207d6e5457b4c43323f1fafa8002f86dbc4f1f6c2d2f1106",
+      "userId": "test_user_a_1788632617827",
+      "expiresAt": 1788719017836
+    },
+    "b8df8f5f59e34af860a34345ef3e64d06d8363ef07f1fdbf6247e4e1a37cbbab": {
+      "token": "b8df8f5f59e34af860a34345ef3e64d06d8363ef07f1fdbf6247e4e1a37cbbab",
+      "userId": "test_user_a_1788632882873",
+      "expiresAt": 1788719282880
+    }
+  },
+  "documents": {
+    "doc_b_1788632617851": {
+      "id": "doc_b_1788632617851",
+      "userId": "test_user_b_1788632617827",
+      "fileName": "bob_confidential_resume.txt",
+      "fileSize": 120,
+      "mimeType": "text/plain",
+      "uploadDate": "2026-09-05T18:23:37.852Z",
+      "chunkCount": 1,
+      "charCount": 100,
+      "previewText": "Bob has 10 years of Rust and Go experience."
+    },
+    "doc_b_1788632882895": {
+      "id": "doc_b_1788632882895",
+      "userId": "test_user_b_1788632882873",
+      "fileName": "bob_confidential_resume.txt",
+      "fileSize": 120,
+      "mimeType": "text/plain",
+      "uploadDate": "2026-09-05T18:28:02.895Z",
+      "chunkCount": 1,
+      "charCount": 100,
+      "previewText": "Bob has 10 years of Rust and Go experience."
+    }
+  },
+  "chunks": {
+    "doc_b_1788632617851_chunk_0": {
+      "id": "doc_b_1788632617851_chunk_0",
+      "docId": "doc_b_1788632617851",
+      "userId": "test_user_b_1788632617827",
+      "text": "Bob confidential resume with high security clearance.",
+      "chunkIndex": 0
+    },
+    "doc_b_1788632882895_chunk_0": {
+      "id": "doc_b_1788632882895_chunk_0",
+      "docId": "doc_b_1788632882895",
+      "userId": "test_user_b_1788632882873",
+      "text": "Bob confidential resume with high security clearance.",
+      "chunkIndex": 0
+    }
+  },
+  "profiles": {},
+  "interviews": {},
+  "analyses": {}
+}

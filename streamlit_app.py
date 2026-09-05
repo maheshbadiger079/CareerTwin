@@ -5,10 +5,8 @@ import streamlit as st
 from datetime import datetime
 from dotenv import load_dotenv
 
-# Load local environment
 load_dotenv()
 
-# Import Python backend modules
 from python_backend.rag import (
     extract_text_from_file,
     clean_text,
@@ -25,7 +23,6 @@ from python_backend.analysis import (
 )
 from python_backend.test_runner import run_all_acceptance_tests
 
-# Page configuration
 st.set_page_config(
     page_title="CareerTwin - AI Career Co-Pilot",
     page_icon="??",
@@ -33,7 +30,6 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS for Sleek Modern Styling
 st.markdown("""
 <style>
     .main-title {
@@ -92,7 +88,6 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Initialize Session State
 if "user_id" not in st.session_state:
     st.session_state.user_id = f"user_{int(time.time())}"
 if "documents" not in st.session_state:
@@ -119,7 +114,6 @@ if "interview_session" not in st.session_state:
 if "acceptance_report" not in st.session_state:
     st.session_state.acceptance_report = None
 
-# Sidebar Navigation
 with st.sidebar:
     st.markdown("<h2 style='margin-bottom:0;'>?? CareerTwin</h2>", unsafe_allow_html=True)
     st.caption("Grounded AI Career Co-Pilot")
@@ -128,14 +122,14 @@ with st.sidebar:
     nav_choice = st.radio(
         "Navigation",
         [
-            "?? Dashboard",
-            "?? Resume & Knowledge Base",
-            "?? Career Twin RAG Chat",
-            "?? Job Matcher",
-            "??? 5-Stage Interview Simulator",
-            "?? Skill-Gap Roadmap",
-            "?? Acceptance Test Suite",
-            "?? Settings & API Key"
+            "Dashboard",
+            "Resume & Knowledge Base",
+            "Career Twin RAG Chat",
+            "Job Matcher",
+            "5-Stage Interview Simulator",
+            "Skill-Gap Roadmap",
+            "Acceptance Test Suite",
+            "Settings & API Key"
         ],
         index=0
     )
@@ -150,16 +144,16 @@ with st.sidebar:
         has_api_key = True
 
     if has_api_key:
-        st.success("?? Gemini 2.5 Flash Connected", icon="?")
+        st.success("Gemini 2.5 Flash Connected")
     else:
-        st.info("?? Deterministic Fallback Engine Active (Zero-Cost / Offline)", icon="???")
+        st.info("Deterministic Fallback Engine Active (Zero-Cost / Offline)")
 
     st.caption(f"Tenant Isolation: `{st.session_state.user_id[:12]}`")
 
 # -------------------------------------------------------------
 # 1. DASHBOARD
 # -------------------------------------------------------------
-if nav_choice == "?? Dashboard":
+if nav_choice == "Dashboard":
     st.markdown("<div class='main-title'>Career Twin Dashboard</div>", unsafe_allow_html=True)
     st.markdown("<div class='sub-title'>Your verified, strictly grounded AI career co-pilot and readiness intelligence.</div>", unsafe_allow_html=True)
 
@@ -224,7 +218,7 @@ if nav_choice == "?? Dashboard":
         st.markdown("### ?? Candidate Profile Summary")
         p = st.session_state.profile
         st.write(f"**Target Role:** {p.get('targetRole', 'Software Engineer')}")
-        st.write(f"**Career Goals:** {p.get('careerGoals', 'Build scalable applications.')}")
+        st.write(f"**Career Goals:** {p.get('careerGoals', 'Advance technical expertise.')}")
         st.write(f"**Summary:** {p.get('summary', '')}")
         st.write("**Detected Skills & Tech:**")
         tags_html = "".join([f"<span class='badge-pill badge-blue'>{s}</span>" for s in p.get("skills", [])])
@@ -233,14 +227,14 @@ if nav_choice == "?? Dashboard":
 # -------------------------------------------------------------
 # 2. RESUME & KNOWLEDGE BASE
 # -------------------------------------------------------------
-elif nav_choice == "?? Resume & Knowledge Base":
+elif nav_choice == "Resume & Knowledge Base":
     st.markdown("<div class='main-title'>Resume & Grounded Knowledge Base</div>", unsafe_allow_html=True)
     st.markdown("<div class='sub-title'>Upload candidate resumes into partitioned, strictly grounded vector spaces.</div>", unsafe_allow_html=True)
 
     uploaded_file = st.file_uploader("Upload Resume (PDF, TXT, MD)", type=["pdf", "txt", "md"])
     
     if uploaded_file is not None:
-        if st.button("?? Parse, Chunk & Embed Resume", type="primary"):
+        if st.button("Parse, Chunk & Embed Resume", type="primary"):
             with st.spinner("Extracting text and generating embeddings..."):
                 try:
                     bytes_data = uploaded_file.read()
@@ -260,7 +254,6 @@ elif nav_choice == "?? Resume & Knowledge Base":
                     })
                     st.session_state.chunks.extend(chunks)
                     
-                    # Extract career profile and ATS analysis
                     with st.spinner("Extracting profile & running ATS evaluation..."):
                         key = st.session_state.get("custom_gemini_api_key")
                         st.session_state.profile = extract_career_profile(cleaned, st.session_state.user_id, key)
@@ -279,7 +272,7 @@ elif nav_choice == "?? Resume & Knowledge Base":
             with c2: st.caption(f"{doc['charCount']} characters ({doc['chunkCount']} chunks)")
             with c3: st.caption(f"Uploaded: {doc['uploadDate']}")
             with c4:
-                if st.button("??? Delete", key=f"del_{doc['id']}"):
+                if st.button("Delete", key=f"del_{doc['id']}"):
                     st.session_state.chunks = [c for c in st.session_state.chunks if c["docId"] != doc["id"]]
                     st.session_state.documents = [d for d in st.session_state.documents if d["id"] != doc["id"]]
                     st.rerun()
@@ -328,14 +321,13 @@ elif nav_choice == "?? Resume & Knowledge Base":
 # -------------------------------------------------------------
 # 3. RAG CHAT
 # -------------------------------------------------------------
-elif nav_choice == "?? Career Twin RAG Chat":
+elif nav_choice == "Career Twin RAG Chat":
     st.markdown("<div class='main-title'>Career Twin RAG Chat</div>", unsafe_allow_html=True)
     st.markdown("<div class='sub-title'>Ask strictly grounded questions about your verified career credentials and experience.</div>", unsafe_allow_html=True)
 
     if not st.session_state.chunks:
         st.warning("?? No documents indexed yet. Please upload a resume in **Resume & Knowledge Base** first.")
 
-    # Display Chat History
     for msg in st.session_state.rag_chat_history:
         if msg["role"] == "user":
             with st.chat_message("user"):
@@ -353,9 +345,8 @@ elif nav_choice == "?? Career Twin RAG Chat":
                         </div>
                         """, unsafe_allow_html=True)
 
-    user_query = st.chat_input("Ask about your indexed resume (e.g. 'What is my Python experience?', 'What technologies are listed?')")
+    user_query = st.chat_input("Ask about your indexed resume (e.g. 'What is my Python experience?')")
     if user_query:
-        # Add user message
         st.session_state.rag_chat_history.append({"role": "user", "content": user_query})
         
         doc_names = {d["id"]: d["fileName"] for d in st.session_state.documents}
@@ -375,7 +366,7 @@ elif nav_choice == "?? Career Twin RAG Chat":
 # -------------------------------------------------------------
 # 4. JOB MATCHER
 # -------------------------------------------------------------
-elif nav_choice == "?? Job Matcher":
+elif nav_choice == "Job Matcher":
     st.markdown("<div class='main-title'>Job Description Matcher</div>", unsafe_allow_html=True)
     st.markdown("<div class='sub-title'>Compare target job descriptions against verified candidate credentials without extrapolation.</div>", unsafe_allow_html=True)
 
@@ -388,7 +379,7 @@ elif nav_choice == "?? Job Matcher":
         placeholder="Paste full job posting text here (including required skills, qualifications, and responsibilities)..."
     )
 
-    if st.button("?? Analyze Match & Missing Skills", type="primary"):
+    if st.button("Analyze Match & Missing Skills", type="primary"):
         if not job_text.strip():
             st.error("Please paste a job description first.")
         else:
@@ -446,7 +437,7 @@ elif nav_choice == "?? Job Matcher":
 # -------------------------------------------------------------
 # 5. 5-STAGE INTERVIEW SIMULATOR
 # -------------------------------------------------------------
-elif nav_choice == "??? 5-Stage Interview Simulator":
+elif nav_choice == "5-Stage Interview Simulator":
     st.markdown("<div class='main-title'>5-Stage Progressive Project Defense & Mock Interview</div>", unsafe_allow_html=True)
     st.markdown("<div class='sub-title'>Rigorous simulated interview with stage-by-stage technical, behavioral, and architectural defense.</div>", unsafe_allow_html=True)
 
@@ -464,7 +455,7 @@ elif nav_choice == "??? 5-Stage Interview Simulator":
         with c2:
             proj_name = st.text_input("Project Name (for Project Defense)", value="CareerTwin Co-Pilot")
 
-        if st.button("?? Start Interview Simulation", type="primary"):
+        if st.button("Start Interview Simulation", type="primary"):
             key = st.session_state.get("custom_gemini_api_key")
             q = generate_interview_question(int_type, 0, [], st.session_state.profile, proj_name, key)
             
@@ -493,7 +484,7 @@ elif nav_choice == "??? 5-Stage Interview Simulator":
 
         col_sub, col_reset = st.columns([4, 1])
         with col_sub:
-            if st.button("?? Submit Answer", type="primary"):
+            if st.button("Submit Answer", type="primary"):
                 if not user_ans.strip():
                     st.warning("Please type an answer before submitting.")
                 else:
@@ -519,7 +510,6 @@ elif nav_choice == "??? 5-Stage Interview Simulator":
                         session["currentCategory"] = next_q["category"]
                         st.rerun()
                     else:
-                        # Completed 5 stages -> evaluate
                         with st.spinner("Evaluating complete interview session..."):
                             key = st.session_state.get("custom_gemini_api_key")
                             eval_res = evaluate_interview_session(session["type"], session["history"], key)
@@ -527,13 +517,12 @@ elif nav_choice == "??? 5-Stage Interview Simulator":
                             st.rerun()
 
         with col_reset:
-            if st.button("?? Reset Session"):
+            if st.button("Reset Session"):
                 session["active"] = False
                 session["history"] = []
                 session["evaluation"] = None
                 st.rerun()
 
-    # If completed and evaluated
     if session.get("evaluation"):
         st.divider()
         st.markdown("### ?? Comprehensive Interview Evaluation Scorecard")
@@ -562,13 +551,13 @@ elif nav_choice == "??? 5-Stage Interview Simulator":
 # -------------------------------------------------------------
 # 6. SKILL-GAP ROADMAP
 # -------------------------------------------------------------
-elif nav_choice == "?? Skill-Gap Roadmap":
+elif nav_choice == "Skill-Gap Roadmap":
     st.markdown("<div class='main-title'>Skill-Gap Analysis & Learning Roadmap</div>", unsafe_allow_html=True)
     st.markdown("<div class='sub-title'>Identify validated skills vs areas needing growth, with prioritized learning sequences.</div>", unsafe_allow_html=True)
 
     target_role_input = st.text_input("Target Career Role:", value="Senior Full-Stack Cloud Engineer")
     
-    if st.button("?? Generate Skill Gap Breakdown", type="primary"):
+    if st.button("Generate Skill Gap Breakdown", type="primary"):
         with st.spinner("Analyzing candidate profile against target role benchmark..."):
             profile = st.session_state.profile or {
                 "skills": ["Python", "React", "PostgreSQL"],
@@ -614,11 +603,11 @@ elif nav_choice == "?? Skill-Gap Roadmap":
 # -------------------------------------------------------------
 # 7. ACCEPTANCE TEST SUITE
 # -------------------------------------------------------------
-elif nav_choice == "?? Acceptance Test Suite":
+elif nav_choice == "Acceptance Test Suite":
     st.markdown("<div class='main-title'>Automated MVP Acceptance Test Suite</div>", unsafe_allow_html=True)
     st.markdown("<div class='sub-title'>Live verification runner covering authentication, cross-tenant isolation, RAG grounding defense, and data lifecycle.</div>", unsafe_allow_html=True)
 
-    if st.button("?? Run Full Acceptance Test Suite (15 Tests)", type="primary"):
+    if st.button("Run Full Acceptance Test Suite (15 Tests)", type="primary"):
         with st.spinner("Executing live assertion suite across all modules..."):
             report = run_all_acceptance_tests()
             st.session_state.acceptance_report = report
@@ -644,7 +633,6 @@ elif nav_choice == "?? Acceptance Test Suite":
         for t in rep.get("results", []):
             passed = t["status"] == "passed"
             icon = "? PASS" if passed else "? FAIL"
-            color = "#10B981" if passed else "#EF4444"
             
             with st.expander(f"{icon} [{t['id']}] {t['name']} ({t['durationMs']}ms)"):
                 st.write(f"**Category:** {t['category']}")
@@ -653,7 +641,7 @@ elif nav_choice == "?? Acceptance Test Suite":
 # -------------------------------------------------------------
 # 8. SETTINGS
 # -------------------------------------------------------------
-elif nav_choice == "?? Settings & API Key":
+elif nav_choice == "Settings & API Key":
     st.markdown("<div class='main-title'>Settings & AI Engine Configuration</div>", unsafe_allow_html=True)
     st.markdown("<div class='sub-title'>Manage your Gemini API key and tenant session workspace.</div>", unsafe_allow_html=True)
 
@@ -664,13 +652,13 @@ elif nav_choice == "?? Settings & API Key":
         type="password",
         help="If not provided, the application runs reliably using its deterministic analytical engine."
     )
-    if st.button("?? Save Key"):
+    if st.button("Save Key"):
         st.session_state.custom_gemini_api_key = key_input.strip()
         st.success("API Key saved for current session!")
 
     st.divider()
     st.markdown("### ?? Workspace Session Reset")
-    if st.button("??? Reset Current Session & Knowledge Base", type="secondary"):
+    if st.button("Reset Current Session & Knowledge Base", type="secondary"):
         st.session_state.documents = []
         st.session_state.chunks = []
         st.session_state.profile = None

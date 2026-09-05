@@ -92,11 +92,18 @@ npm run build
 npm start
 ```
 
+### 7. Run with Streamlit (Python)
+```bash
+pip install -r requirements.txt
+streamlit run streamlit_app.py
+```
+Access the Streamlit application at `http://localhost:8501`.
+
 ---
 
 ## 🧪 Running Acceptance Tests
 
-You can run the full automated verification suite directly from the UI:
-1. Navigate to the **Acceptance Suite** tab in the top navigation.
-2. Click **Run All Acceptance Tests**.
+You can run the full automated verification suite directly from either interface:
+1. **React / Node Web App**: Navigate to the **Acceptance Suite** tab and click **Run All Acceptance Tests**.
+2. **Streamlit App**: Select **🧪 Acceptance Test Suite** from the sidebar and click **▶️ Run Full Acceptance Test Suite (15 Tests)**.
 3. Inspect live assertions covering authentication, cross-user isolation, known vs unknown RAG grounding, prompt injection defense, and vector cleanup.

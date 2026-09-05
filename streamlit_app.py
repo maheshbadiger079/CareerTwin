@@ -25,7 +25,7 @@ from python_backend.test_runner import run_all_acceptance_tests
 
 st.set_page_config(
     page_title="CareerTwin - AI Career Co-Pilot",
-    page_icon="??",
+    page_icon="",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -115,27 +115,27 @@ if "acceptance_report" not in st.session_state:
     st.session_state.acceptance_report = None
 
 with st.sidebar:
-    st.markdown("<h2 style='margin-bottom:0;'>?? CareerTwin</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='margin-bottom:0;'>🎯 CareerTwin</h2>", unsafe_allow_html=True)
     st.caption("Grounded AI Career Co-Pilot")
     st.divider()
 
     nav_choice = st.radio(
         "Navigation",
         [
-            "Dashboard",
-            "Resume & Knowledge Base",
-            "Career Twin RAG Chat",
-            "Job Matcher",
-            "5-Stage Interview Simulator",
-            "Skill-Gap Roadmap",
-            "Acceptance Test Suite",
-            "Settings & API Key"
+            "📊 Dashboard",
+            "📄 Resume & Knowledge Base",
+            "💬 Career Twin RAG Chat",
+            "🎯 Job Matcher",
+            "🎙️ 5-Stage Interview Simulator",
+            "📈 Skill-Gap Roadmap",
+            "🧪 Acceptance Test Suite",
+            "⚙️ Settings & API Key"
         ],
         index=0
     )
 
     st.divider()
-    st.markdown("### ?? Security & Engine")
+    st.markdown("### 🔒 Security & Engine")
     api_key_env = os.getenv("GEMINI_API_KEY", "")
     has_api_key = bool(api_key_env and api_key_env not in ["MY_GEMINI_API_KEY", "your-gemini-api-key-here", ""])
     
@@ -153,7 +153,7 @@ with st.sidebar:
 # -------------------------------------------------------------
 # 1. DASHBOARD
 # -------------------------------------------------------------
-if nav_choice == "Dashboard":
+if "Dashboard" in nav_choice:
     st.markdown("<div class='main-title'>Career Twin Dashboard</div>", unsafe_allow_html=True)
     st.markdown("<div class='sub-title'>Your verified, strictly grounded AI career co-pilot and readiness intelligence.</div>", unsafe_allow_html=True)
 
@@ -194,7 +194,7 @@ if nav_choice == "Dashboard":
         </div>
         """, unsafe_allow_html=True)
 
-    st.markdown("### ?? Quick Start")
+    st.markdown("### 🚀 Quick Start")
     col_a, col_b = st.columns(2)
     with col_a:
         st.info("""
@@ -215,7 +215,7 @@ if nav_choice == "Dashboard":
 
     if st.session_state.profile:
         st.divider()
-        st.markdown("### ?? Candidate Profile Summary")
+        st.markdown("###  Candidate Profile Summary")
         p = st.session_state.profile
         st.write(f"**Target Role:** {p.get('targetRole', 'Software Engineer')}")
         st.write(f"**Career Goals:** {p.get('careerGoals', 'Advance technical expertise.')}")
@@ -227,7 +227,7 @@ if nav_choice == "Dashboard":
 # -------------------------------------------------------------
 # 2. RESUME & KNOWLEDGE BASE
 # -------------------------------------------------------------
-elif nav_choice == "Resume & Knowledge Base":
+elif "Resume" in nav_choice:
     st.markdown("<div class='main-title'>Resume & Grounded Knowledge Base</div>", unsafe_allow_html=True)
     st.markdown("<div class='sub-title'>Upload candidate resumes into partitioned, strictly grounded vector spaces.</div>", unsafe_allow_html=True)
 
@@ -265,10 +265,10 @@ elif nav_choice == "Resume & Knowledge Base":
 
     if st.session_state.documents:
         st.divider()
-        st.markdown("### ?? Uploaded Documents")
+        st.markdown("###  Uploaded Documents")
         for doc in st.session_state.documents:
             c1, c2, c3, c4 = st.columns([3, 2, 2, 1])
-            with c1: st.write(f"?? **{doc['fileName']}**")
+            with c1: st.write(f" **{doc['fileName']}**")
             with c2: st.caption(f"{doc['charCount']} characters ({doc['chunkCount']} chunks)")
             with c3: st.caption(f"Uploaded: {doc['uploadDate']}")
             with c4:
@@ -279,7 +279,7 @@ elif nav_choice == "Resume & Knowledge Base":
 
     if st.session_state.resume_analysis:
         st.divider()
-        st.markdown("### ?? ATS & Recruiter Readiness Analysis")
+        st.markdown("###  ATS & Recruiter Readiness Analysis")
         res = st.session_state.resume_analysis
 
         score = res.get("overallScore", 70)
@@ -305,28 +305,28 @@ elif nav_choice == "Resume & Knowledge Base":
             for s in res.get("strengths", []):
                 st.markdown(f"- {s}")
             
-            st.markdown("#### ?? Recommended Keywords")
+            st.markdown("####  Recommended Keywords")
             kw_html = "".join([f"<span class='badge-pill badge-green'>{k}</span>" for k in res.get("keywordSuggestions", [])])
             st.markdown(kw_html, unsafe_allow_html=True)
 
         with col2:
-            st.markdown("#### ?? ATS Improvement Areas")
+            st.markdown("####  ATS Improvement Areas")
             for w in res.get("weaknesses", []):
                 st.markdown(f"- {w}")
 
-            st.markdown("#### ??? Actionable Polish (Google XYZ Formula)")
+            st.markdown("#### ? Actionable Polish (Google XYZ Formula)")
             for a in res.get("actionableImprovements", []):
                 st.markdown(f"- {a}")
 
 # -------------------------------------------------------------
 # 3. RAG CHAT
 # -------------------------------------------------------------
-elif nav_choice == "Career Twin RAG Chat":
+elif "RAG Chat" in nav_choice:
     st.markdown("<div class='main-title'>Career Twin RAG Chat</div>", unsafe_allow_html=True)
     st.markdown("<div class='sub-title'>Ask strictly grounded questions about your verified career credentials and experience.</div>", unsafe_allow_html=True)
 
     if not st.session_state.chunks:
-        st.warning("?? No documents indexed yet. Please upload a resume in **Resume & Knowledge Base** first.")
+        st.warning(" No documents indexed yet. Please upload a resume in **Resume & Knowledge Base** first.")
 
     for msg in st.session_state.rag_chat_history:
         if msg["role"] == "user":
@@ -366,12 +366,12 @@ elif nav_choice == "Career Twin RAG Chat":
 # -------------------------------------------------------------
 # 4. JOB MATCHER
 # -------------------------------------------------------------
-elif nav_choice == "Job Matcher":
+elif "Job Matcher" in nav_choice:
     st.markdown("<div class='main-title'>Job Description Matcher</div>", unsafe_allow_html=True)
     st.markdown("<div class='sub-title'>Compare target job descriptions against verified candidate credentials without extrapolation.</div>", unsafe_allow_html=True)
 
     if not st.session_state.profile:
-        st.warning("?? Please upload a resume first in **Resume & Knowledge Base** to build your profile.")
+        st.warning(" Please upload a resume first in **Resume & Knowledge Base** to build your profile.")
 
     job_text = st.text_area(
         "Paste Job Description:",
@@ -421,7 +421,7 @@ elif nav_choice == "Job Matcher":
             for m in res.get("matchingSkills", []):
                 st.markdown(f"- **{m}**")
 
-            st.markdown("#### ?? Core Responsibilities Identified")
+            st.markdown("####  Core Responsibilities Identified")
             for r in res.get("responsibilities", []):
                 st.markdown(f"- {r}")
 
@@ -430,14 +430,14 @@ elif nav_choice == "Job Matcher":
             for m in res.get("missingSkills", []):
                 st.markdown(f"- <span style='color:#F59E0B;'>{m}</span>", unsafe_allow_html=True)
 
-            st.markdown("#### ?? Recommended Next Steps")
+            st.markdown("####  Recommended Next Steps")
             for n in res.get("recommendedNextSteps", []):
                 st.markdown(f"- {n}")
 
 # -------------------------------------------------------------
 # 5. 5-STAGE INTERVIEW SIMULATOR
 # -------------------------------------------------------------
-elif nav_choice == "5-Stage Interview Simulator":
+elif "Interview" in nav_choice:
     st.markdown("<div class='main-title'>5-Stage Progressive Project Defense & Mock Interview</div>", unsafe_allow_html=True)
     st.markdown("<div class='sub-title'>Rigorous simulated interview with stage-by-stage technical, behavioral, and architectural defense.</div>", unsafe_allow_html=True)
 
@@ -525,7 +525,7 @@ elif nav_choice == "5-Stage Interview Simulator":
 
     if session.get("evaluation"):
         st.divider()
-        st.markdown("### ?? Comprehensive Interview Evaluation Scorecard")
+        st.markdown("###  Comprehensive Interview Evaluation Scorecard")
         ev = session["evaluation"]
 
         c1, c2, c3 = st.columns(3)
@@ -544,14 +544,14 @@ elif nav_choice == "5-Stage Interview Simulator":
             for s in ev.get("strengths", []):
                 st.markdown(f"- {s}")
         with col_b:
-            st.markdown("#### ?? Growth & STAR Improvements")
+            st.markdown("####  Growth & STAR Improvements")
             for imp in ev.get("improvementSuggestions", []):
                 st.markdown(f"- {imp}")
 
 # -------------------------------------------------------------
 # 6. SKILL-GAP ROADMAP
 # -------------------------------------------------------------
-elif nav_choice == "Skill-Gap Roadmap":
+elif "Skill-Gap" in nav_choice:
     st.markdown("<div class='main-title'>Skill-Gap Analysis & Learning Roadmap</div>", unsafe_allow_html=True)
     st.markdown("<div class='sub-title'>Identify validated skills vs areas needing growth, with prioritized learning sequences.</div>", unsafe_allow_html=True)
 
@@ -573,7 +573,7 @@ elif nav_choice == "Skill-Gap Roadmap":
         rep = st.session_state.skill_gap_report
         st.divider()
 
-        st.markdown("### ?? Skill Classification Breakdown")
+        st.markdown("###  Skill Classification Breakdown")
         for item in rep.get("skills", []):
             status = item.get("status", "unknown")
             badge_class = "badge-green" if status == "demonstrated" else "badge-amber" if status == "needs_improvement" else "badge-blue"
@@ -592,18 +592,18 @@ elif nav_choice == "Skill-Gap Roadmap":
         st.divider()
         col1, col2 = st.columns(2)
         with col1:
-            st.markdown("#### ??? Prioritized Learning Order")
+            st.markdown("#### ? Prioritized Learning Order")
             for step in rep.get("suggestedLearningOrder", []):
                 st.markdown(f"- {step}")
         with col2:
-            st.markdown("#### ??? Recommended Portfolio Projects")
+            st.markdown("#### ? Recommended Portfolio Projects")
             for proj in rep.get("recommendedProjects", []):
                 st.markdown(f"- {proj}")
 
 # -------------------------------------------------------------
 # 7. ACCEPTANCE TEST SUITE
 # -------------------------------------------------------------
-elif nav_choice == "Acceptance Test Suite":
+elif "Acceptance" in nav_choice:
     st.markdown("<div class='main-title'>Automated MVP Acceptance Test Suite</div>", unsafe_allow_html=True)
     st.markdown("<div class='sub-title'>Live verification runner covering authentication, cross-tenant isolation, RAG grounding defense, and data lifecycle.</div>", unsafe_allow_html=True)
 
@@ -629,7 +629,7 @@ elif nav_choice == "Acceptance Test Suite":
         </div>
         """, unsafe_allow_html=True)
 
-        st.markdown("### ?? Detailed Test Results")
+        st.markdown("###  Detailed Test Results")
         for t in rep.get("results", []):
             passed = t["status"] == "passed"
             icon = "? PASS" if passed else "? FAIL"
@@ -641,11 +641,11 @@ elif nav_choice == "Acceptance Test Suite":
 # -------------------------------------------------------------
 # 8. SETTINGS
 # -------------------------------------------------------------
-elif nav_choice == "Settings & API Key":
+elif "Settings" in nav_choice:
     st.markdown("<div class='main-title'>Settings & AI Engine Configuration</div>", unsafe_allow_html=True)
     st.markdown("<div class='sub-title'>Manage your Gemini API key and tenant session workspace.</div>", unsafe_allow_html=True)
 
-    st.markdown("### ?? Google Gemini API Key")
+    st.markdown("###  Google Gemini API Key")
     key_input = st.text_input(
         "Enter Gemini API Key (Optional):",
         value=st.session_state.get("custom_gemini_api_key", os.getenv("GEMINI_API_KEY", "")),
@@ -657,7 +657,7 @@ elif nav_choice == "Settings & API Key":
         st.success("API Key saved for current session!")
 
     st.divider()
-    st.markdown("### ?? Workspace Session Reset")
+    st.markdown("###  Workspace Session Reset")
     if st.button("Reset Current Session & Knowledge Base", type="secondary"):
         st.session_state.documents = []
         st.session_state.chunks = []
